@@ -4,7 +4,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 body {
-  padding: 3;
+  padding: 0;
   margin: 0;
   background-color: var(--primary-color);
   color: var(--secondary-color-4);
@@ -29,8 +29,11 @@ body {
 }
 
 :root {
+  /* Text colors */
+  --text-color: #9d9d9d;
+
   /* Primary colors */
-  --primary-color: var(--dark, #666666) var(--light, #666666);
+  --primary-color: var(--dark, #000) var(--light, #fff);
   --primary-color-1: var(--dark, #0e0e0e) var(--light, #fbfbfb);
   --primary-color-2: var(--dark, #0a0a0a) var(--light, #fff);
   --primary-color-3: var(--dark, #141313) var(--light, #f8f8f8);

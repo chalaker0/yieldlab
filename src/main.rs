@@ -1,8 +1,9 @@
+use crate::components::input::Input;
+use crate::components::label::Label;
 use dioxus::prelude::*;
 
 mod components;
 
-const FAVICON: Asset = asset!("/assets/favicon.ico");
 const MAIN_CSS: Asset = asset!("/assets/main.css");
 const HEADER_SVG: Asset = asset!("/assets/header.svg");
 const TAILWIND_CSS: Asset = asset!("/assets/tailwind.css");
@@ -14,31 +15,35 @@ fn main() {
 #[component]
 fn App() -> Element {
     rsx! {
-        document::Link { rel: "icon", href: FAVICON }
         document::Link { rel: "stylesheet", href: MAIN_CSS } document::Link { rel: "stylesheet", href: TAILWIND_CSS }
         Hero {}
-
     }
 }
 
 #[component]
 pub fn Hero() -> Element {
-    let children = String::new();
+    let mut children = use_signal(String::new);
     rsx! {
+        // Header
         div {
             id: "hero",
-            img { src: HEADER_SVG, id: "header" }
-            div { id: "links",
-                input {
-                    class: "input", 
-                    value: {children},
-                    placeholder: "Enter text"}
-                a { href: "https://dioxuslabs.com/learn/0.7/", "Learn Dioxus" }
-                a { href: "https://dioxuslabs.com/awesome", "🚀 Awesome Dioxus" }
-                a { href: "https://github.com/dioxus-community/", "📡 Community Libraries" }
-                a { href: "https://github.com/DioxusLabs/sdk", "⚙️ Dioxus Development Kit" }
-                a { href: "https://marketplace.visualstudio.com/items?itemName=DioxusLabs.dioxus", "💫 VSCode Extension" }
-                a { href: "https://discord.gg/XgGxMSkvUM", "👋 Community Discord" }
+            div { id: "header-wrapper",
+                img { 
+                    src: HEADER_SVG, 
+                    id: "header" 
+                }
+            }
+        }
+
+        div {
+            display: "flex", flex_direction: "column", gap: ".5rem",
+            Label { html_for: "name" , "Name" }
+
+            Input {
+                oninput: move |e: FormEvent| children.set(e.value()),
+                placeholder: "PV",
+                value: children,
+                class: "input",
             }
         }
     }
